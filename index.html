@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JOCA 3D — Criando Ideias. Imprimindo Diversão.</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@500;700;800&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: radial-gradient(circle at top, #0a1931 0%, #050505 65%);
+      color: #ffffff;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    /* TOPO E LOGO */
+    .topo {
+      text-align: center;
+      padding: 20px 10px 25px;
+      border-bottom: 2px solid #0055ff;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .logo-box img {
+      max-width: 240px;
+      max-height: 180px;
+      border-radius: 20px;
+      filter: drop-shadow(0 0 18px rgba(0, 102, 255, 0.6));
+    }
+
+    .logo-texto {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 3.2em;
+      line-height: 1;
+      letter-spacing: 2px;
+      text-shadow: 0 4px 15px rgba(0, 102, 255, 0.7);
+    }
+
+    .logo-texto .joca {
+      color: #ffffff;
+    }
+
+    .logo-texto .tresd {
+      color: #ff9800;
+      margin-left: 6px;
+    }
+
+    .slogan {
+      display: inline-block;
+      background: #0044cc;
+      border: 2px solid #ffb300;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.85em;
+      padding: 6px 18px;
+      border-radius: 999px;
+      margin-top: 12px;
+      letter-spacing: 0.8px;
+      box-shadow: 0 4px 12px rgba(0, 68, 204, 0.5);
+    }
+
+    .box-encomenda {
+      margin-top: 16px;
+    }
+
+    .btn-encomenda {
+      width: auto;
+      background: linear-gradient(135deg, #0066ff, #003399);
+      border: 2px solid #00e676;
+      color: #ffffff;
+      padding: 10px 22px;
+      font-size: 0.95em;
+      border-radius: 999px;
+      box-shadow: 0 4px 15px rgba(0, 230, 118, 0.25);
+    }
+
+    /* CATÁLOGO DE PRODUTOS */
+    .produtos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 22px;
+      max-width: 1000px;
+      margin: 30px auto 0;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #0f1b33 0%, #0b0e17 100%);
+      padding: 16px;
+      border-radius: 18px;
+      text-align: center;
+      border: 2px solid #163266;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: #ff9800;
+      box-shadow: 0 10px 25px rgba(255, 152, 0, 0.2);
+    }
+
+    .card img {
+      width: 100%;
+      height: 165px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      border: 1px solid #1e3f7a;
+    }
+
+    .foto-placeholder {
+      width: 100%;
+      height: 165px;
+      background: radial-gradient(circle, #142850, #0b132b);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 56px;
+      margin-bottom: 12px;
+      border: 1px solid #1e3f7a;
+    }
+
+    .card h3 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.25em;
+      margin: 6px 0;
+      color: #ffffff;
+    }
+
+    .card p {
+      color: #9bb4d8;
+      font-size: 0.9em;
+      margin: 0 0 10px;
+    }
+
+    .preco {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.4em;
+      color: #ffca28;
+      margin: 10px 0 14px;
+    }
+
+    /* BOTÕES */
+    button {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #ff8f00, #ff6d00);
+      color: #ffffff;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 0.95em;
+      width: 100%;
+      box-shadow: 0 4px 12px rgba(255, 109, 0, 0.35);
+      transition: transform 0.15s, filter 0.15s;
+    }
+
+    button:hover {
+      filter: brightness(1.1);
+      transform: scale(1.02);
+    }
+
+    /* CARRINHO E ÁREA DO DONO */
+    #carrinho, .painel-admin {
+      background: #0d1526;
+      padding: 24px;
+      border-radius: 20px;
+      margin: 35px auto 20px;
+      border: 2px solid #1b3b75;
+      max-width: 600px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .carrinho-topo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1b3b75;
+      padding-bottom: 12px;
+    }
+
+    .carrinho-topo h2 {
+      font-family: 'Fredoka', sans-serif;
+      margin: 0;
+      color: #ffca28;
+    }
+
+    .tag-qtd {
+      background: #0055ff;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.85em;
+      font-weight: 800;
+    }
+
+    #lista-itens {
+      list-style: none;
+      padding: 0;
+      margin: 15px 0;
+    }
+
+    #lista-itens li {
+      background: #13203b;
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-left: 4px solid #ff9800;
+    }
+
+    .total-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #080d17;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 1.15em;
+      margin-top: 15px;
+      border: 1px solid #1b3b75;
+    }
+
+    .total-box strong {
+      color: #00e676;
+      font-size: 1.25em;
+    }
+
+    .btn-whats {
+      background: linear-gradient(135deg, #00e676, #00b248);
+      color: #041f0e;
+      margin-top: 16px;
+      font-size: 1.1em;
+      box-shadow: 0 4px 15px rgba(0, 230, 118, 0.35);
+    }
+
+    .btn-add {
+      background: linear-gradient(135deg, #0066ff, #0044cc);
+      margin-top: 15px;
+      box-shadow: 0 4px 15px rgba(0, 102, 255, 0.4);
+    }
+
+    .btn-voltar {
+      background: #1b2a4a;
+      width: auto;
+      padding: 8px 16px;
+      margin-bottom: 15px;
+      box-shadow: none;
+    }
+
+    .subtexto {
+      color: #9bb4d8;
+      font-size: 0.9em;
+      margin-top: -8px;
+    }
+
+    .label-arquivo {
+      display: block;
+      margin-top: 14px;
+      font-weight: 700;
+      color: #ffca28;
+      font-size: 0.9em;
+    }
+
+    .divisor {
+      border: none;
+      border-top: 1px solid #1b3b75;
+      margin: 22px 0;
+    }
+
+    input {
+      padding: 12px 14px;
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #264b8e;
+      background: #080e1a;
+      color: #fff;
+      margin-top: 10px;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #ff9800;
+    }
+
+    .item-admin {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #13203b;
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin-top: 8px;
+    }
+
+    .btn-excluir {
+      background: #d50000;
+      width: auto;
+      padding: 6px 12px;
+      box-shadow: none;
+    }
+
+    /* RODAPÉ E BOTÃO ESCONDIDO DO DONO */
+    .rodape {
+      max-width: 1000px;
+      margin: 40px auto 10px;
+      padding-top: 15px;
+      border-top: 1px solid #111c33;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #4f668c;
+      font-size: 0.8em;
+    }
+
+    .btn-secreto {
+      background: transparent;
+      color: #24334d;
+      width: auto;
+      padding: 4px 8px;
+      font-size: 14px;
+      box-shadow: none;
+    }
+
+    .btn-secreto:hover {
+      color: #4f668c;
+      background: transparent;
+    }
+  </style>
+</head>
+<body>
+  <header class="topo">
+    <div class="logo-box" id="box-logo">
+      <img id="img-logo" src="" alt="Joca 3D" style="display: none;">
+      <div id="logo-texto-fallback" class="logo-texto">
+        <span class="joca">JOCA</span><span class="tresd">3D</span>
+      </div>
+    </div>
+    <p class="slogan">CRIANDO IDEIAS. IMPRIMINDO DIVERSÃO.</p>
+
+    <div class="box-encomenda">
+      <button class="btn-encomenda" onclick="encomendaPersonalizada()">✨ Fazer Encomenda Personalizada</button>
+    </div>
+  </header>
+
+  <!-- ABA DOS CLIENTES -->
+  <main id="aba-loja">
+    <section id="lista-produtos" class="produtos"></section>
+
+    <section id="carrinho">
+      <div class="carrinho-topo">
+        <h2>🛒 Seu Pedido</h2>
+        <span id="qtd-itens" class="tag-qtd">0 itens</span>
+      </div>
+      <ul id="lista-itens"></ul>
+      <div class="total-box">
+        <span>Total em produtos</span>
+        <strong>R$ <span id="total">0,00</span></strong>
+      </div>
+      <button class="btn-whats" onclick="enviarWhatsApp()">Finalizar Pedido no WhatsApp</button>
+    </section>
+  </main>
+
+  <!-- ABA SECRETA DO DONO -->
+  <main id="aba-admin" style="display: none;">
+    <div class="painel-admin">
+      <button class="btn-voltar" onclick="abrirAba('loja')">⬅ Voltar para a Loja</button>
+
+      <h2>🖼️ Logo da Loja</h2>
+      <p class="subtexto">Escolha a imagem da sua logo no computador para aparecer no topo:</p>
+      <input type="file" id="upload-logo" accept="image/*" onchange="salvarLogoArquivo(event)">
+
+      <hr class="divisor">
+
+      <h2>➕ Adicionar Novo Brinquedo</h2>
+      <p class="subtexto">Preencha os dados e escolha a foto do brinquedo no computador:</p>
+
+      <input type="text" id="novo-nome" placeholder="Nome do brinquedo (ex: Dragão Articulado)">
+      <input type="text" id="nova-desc" placeholder="Descrição (ex: PLA Silk • 30cm)">
+      <input type="number" id="novo-preco" placeholder="Preço em reais (ex: 45.00)" step="0.01">
+
+      <label class="label-arquivo">📷 Foto do Brinquedo (opcional):</label>
+      <input type="file" id="nova-img-arquivo" accept="image/*">
+
+      <button class="btn-add" onclick="adicionarNovoProduto()">Salvar Brinquedo na Loja</button>
+
+      <hr class="divisor">
+      <h3>📦 Brinquedos Cadastrados</h3>
+      <ul id="lista-admin"></ul>
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <span>JOCA 3D • Criando Ideias. Imprimindo Diversão.</span>
+    <button class="btn-secreto" onclick="abrirAba('admin')" title="Configurações">•</button>
+  </footer>
+
+  <script>
+    const SENHA_ADMIN = '14092016';
+    const SEU_WHATSAPP = '5571982433667';
+
+    const produtosPadrao = [
+      { nome: 'Polvo Articulado', desc: 'PLA Laranja • Super flexível', preco: 25.00, img: '' },
+      { nome: 'Dino Low Poly 3D', desc: 'PLA Azul • Estilo geométrico', preco: 35.00, img: '' },
+      { nome: 'Foguete Espacial 3D', desc: 'PLA Laranja e Azul • Colecionável', preco: 30.00, img: '' },
+      { nome: 'Robô Articulado', desc: 'PLA Verde Neon • Mexe os braços', preco: 28.00, img: '' }
+    ];
+
+    let produtos = JSON.parse(localStorage.getItem('meusBrinquedos3D')) || produtosPadrao;
+    let carrinho = [];
+    let total = 0;
+
+    function carregarLogoSalva() {
+      const logoSalva = localStorage.getItem('logoJoca3D');
+      const imgEl = document.getElementById('img-logo');
+      const textoFallback = document.getElementById('logo-texto-fallback');
+
+      if (logoSalva) {
+        imgEl.src = logoSalva;
+        imgEl.style.display = 'inline-block';
+        textoFallback.style.display = 'none';
+      }
+    }
+
+    function salvarLogoArquivo(event) {
+      const arquivo = event.target.files[0];
+      if (!arquivo) return;
+
+      const leitor = new FileReader();
+      leitor.onload = function(e) {
+        localStorage.setItem('logoJoca3D', e.target.result);
+        carregarLogoSalva();
+        alert('Logo atualizada com sucesso!');
+      };
+      leitor.readAsDataURL(arquivo);
+    }
+
+    function otimizarImagem(arquivo, callback) {
+      const leitor = new FileReader();
+      leitor.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const maxLargura = 400;
+          const escala = maxLargura / img.width;
+          canvas.width = maxLargura;
+          canvas.height = img.height * escala;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          callback(canvas.toDataURL('image/jpeg', 0.8));
+        };
+        img.src = e.target.result;
+      };
+      leitor.readAsDataURL(arquivo);
+    }
+
+    function abrirAba(aba) {
+      if (aba === 'admin') {
+        const senhaDigitada = prompt('Acesso restrito:');
+        if (senhaDigitada !== SENHA_ADMIN) {
+          alert('Senha incorreta!');
+          return;
+        }
+        document.getElementById('aba-loja').style.display = 'none';
+        document.getElementById('aba-admin').style.display = 'block';
+        atualizarListaAdmin();
+      } else {
+        document.getElementById('aba-loja').style.display = 'block';
+        document.getElementById('aba-admin').style.display = 'none';
+        renderizarLoja();
+      }
+    }
+
+    function renderizarLoja() {
+      const container = document.getElementById('lista-produtos');
+      container.innerHTML = '';
+
+      const emojis = ['🐙', '🦖', '🚀', '🤖', '🐉', '🔑'];
+
+      produtos.forEach((prod, i) => {
+        const emojiPadrao = emojis[i % emojis.length];
+        const imagemHTML = prod.img
+          ? `<img src="${prod.img}" alt="${prod.nome}">`
+          : `<div class="foto-placeholder">${emojiPadrao}</div>`;
+
+        container.innerHTML += `
+          <div class="card">
+            ${imagemHTML}
+            <h3>${prod.nome}</h3>
+            <p>${prod.desc}</p>
+            <div class="preco">R$ ${prod.preco.toFixed(2).replace('.', ',')}</div>
+            <button onclick="adicionarCarrinho('${prod.nome}', ${prod.preco})">Adicionar ao Carrinho</button>
+          </div>
+        `;
+      });
+    }
+
+    function adicionarNovoProduto() {
+      const nome = document.getElementById('novo-nome').value.trim();
+      const desc = document.getElementById('nova-desc').value.trim();
+      const preco = parseFloat(document.getElementById('novo-preco').value);
+      const inputArquivo = document.getElementById('nova-img-arquivo');
+      const arquivo = inputArquivo.files[0];
+
+      if (!nome || isNaN(preco)) {
+        alert('Preencha pelo menos o nome e o preço do brinquedo!');
+        return;
+      }
+
+      const finalizarCadastro = (imagemBase64) => {
+        produtos.push({ nome, desc: desc || 'Impressão 3D Exclusiva', preco, img: imagemBase64 });
+        localStorage.setItem('meusBrinquedos3D', JSON.stringify(produtos));
+
+        document.getElementById('novo-nome').value = '';
+        document.getElementById('nova-desc').value = '';
+        document.getElementById('novo-preco').value = '';
+        inputArquivo.value = '';
+
+        alert('Brinquedo adicionado com sucesso!');
+        atualizarListaAdmin();
+      };
+
+      if (arquivo) {
+        otimizarImagem(arquivo, (imagemPronta) => {
+          finalizarCadastro(imagemPronta);
+        });
+      } else {
+        finalizarCadastro('');
+      }
+    }
+
+    function atualizarListaAdmin() {
+      const lista = document.getElementById('lista-admin');
+      lista.innerHTML = '';
+      produtos.forEach((prod, index) => {
+        lista.innerHTML += `
+          <li class="item-admin">
+            <span>${prod.nome} — R$ ${prod.preco.toFixed(2).replace('.', ',')}</span>
+            <button class="btn-excluir" onclick="removerProduto(${index})">Excluir</button>
+          </li>
+        `;
+      });
+    }
+
+    function removerProduto(index) {
+      produtos.splice(index, 1);
+      localStorage.setItem('meusBrinquedos3D', JSON.stringify(produtos));
+      atualizarListaAdmin();
+    }
+
+    function adicionarCarrinho(nome, preco) {
+      carrinho.push({ nome, preco });
+      total += preco;
+      atualizarTelaCarrinho();
+    }
+
+    function removerDoCarrinho(index) {
+      total -= carrinho[index].preco;
+      carrinho.splice(index, 1);
+      atualizarTelaCarrinho();
+    }
+
+    function atualizarTelaCarrinho() {
+      const lista = document.getElementById('lista-itens');
+      lista.innerHTML = '';
+      carrinho.forEach((item, index) => {
+        lista.innerHTML += `
+          <li>
+            <span>${item.nome} — <strong>R$ ${item.preco.toFixed(2).replace('.', ',')}</strong></span>
+            <button class="btn-excluir" onclick="removerDoCarrinho(${index})">✕</button>
+          </li>
+        `;
+      });
+      document.getElementById('qtd-itens').textContent = `${carrinho.length} ${carrinho.length === 1 ? 'item' : 'itens'}`;
+      document.getElementById('total').textContent = total.toFixed(2).replace('.', ',');
+    }
+
+    function enviarWhatsApp() {
+      if (carrinho.length === 0) {
+        alert('Adicione pelo menos um brinquedo no carrinho!');
+        return;
+      }
+      let texto = 'Olá! Gostaria de fazer um pedido na *JOCA 3D*:%0A%0A';
+      carrinho.forEach(item => {
+        texto += `• ${item.nome}: R$ ${item.preco.toFixed(2).replace('.', ',')}%0A`;
+      });
+      texto += `%0A*Total dos produtos:* R$ ${total.toFixed(2).replace('.', ',')}`;
+
+      window.open(`https://wa.me/${SEU_WHATSAPP}?text=${texto}`, '_blank');
+    }
+
+    function encomendaPersonalizada() {
+      const texto = 'Olá! Gostaria de fazer uma *encomenda personalizada* na *JOCA 3D* (quero um modelo que não está no catálogo).';
+      window.open(`https://wa.me/${SEU_WHATSAPP}?text=${texto}`, '_blank');
+    }
+
+    carregarLogoSalva();
+    renderizarLoja();
+  </script>
+</body>
+</html>
